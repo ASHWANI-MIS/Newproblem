@@ -1,0 +1,46 @@
+import java.util.Stack;
+
+class MinStack {
+    private Stack<Integer> st;
+    private Stack<Integer> minSt;
+
+    /** Constructor name exactly matches the class name */
+    public MinStack() {
+        st = new Stack<>();
+        minSt = new Stack<>();
+    }
+    
+    public void push(int val) {
+        st.push(val);
+        // Agar minSt khali hai ya naya val current minimum se chota/barabar hai
+        if (minSt.isEmpty() || val <= minSt.peek()) {
+            minSt.push(val);
+        }
+    }
+    
+    public void pop() {
+        // IMPORTANT: Integer objects ko .equals() se compare karein
+        // Kyunki Java mein -128 to 127 ke bahar == kaam nahi karta objects par
+        if (st.peek().equals(minSt.peek())) {
+            minSt.pop();
+        }
+        st.pop();
+    }
+    
+    public int top() {
+        return st.peek();
+    }
+    
+    public int getMin() {
+        return minSt.peek();
+    }
+}
+
+/**
+ * LeetCode internally handles the object creation like this:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
